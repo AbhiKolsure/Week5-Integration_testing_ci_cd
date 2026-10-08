@@ -1,199 +1,115 @@
 # Week 5 — Integration Testing and Continuous Deployment Simulation
 
+This educational internship project extends the inherited Week 4 FastAPI backend in an isolated Week 5 copy. It adds authentication, HTTP integration tests, regression checks, GitHub Actions CI, and a simulated deployment gate. The original Week 4 project and inherited performance evidence remain preserved; expensive Week 4 load tests were not rerun.
+
 ## 1. Project Overview
 
-This Week 5 project extends the inherited FastAPI backend with account
-authentication, HTTP-to-database integration tests, and a GitHub Actions CI
-workflow followed by a simulated deployment validation. The application runs
-with SQLite; CI and deployment checks do not require production services.
+The application integrates FastAPI routes, Pydantic schemas, SQLAlchemy models/database sessions, CRUD operations, and HTTP error handling. Week 5 adds registration/login and protects task and comment operations.
 
-## 2. Objectives
+## 2. Week 5 Objective
 
-The work addresses the YuvaIntern Week 5 objectives to integrate backend
-components, test authentication/data management/error handling, run integration
-tests on code changes, and document a simulated CI/CD pipeline. The deployment
-stage validates application startup and health only; it does not deploy to
-production.
+The project validates authentication, data management, and error handling as an integrated API, then exercises static checks, the complete test suite, and non-production deployment validation in an automated workflow.
 
 ## 3. Existing Backend Architecture
 
-- **FastAPI:** `app/main.py` creates the application and its lifespan.
-- **Routes:** `app/routes/auth.py` implements registration/login;
-  `app/routes/tasks.py` exposes authenticated task, comment, and statistics
-  endpoints.
-- **Schemas:** `app/schemas.py` defines request validation and public response
-  shapes.
-- **Database:** `app/database.py` configures SQLAlchemy and SQLite;
-  `app/models.py` defines users, tasks, and comments.
-- **Authentication:** `app/security.py` handles Argon2 password hashing,
-  signed access tokens, and bearer-token validation.
-- **Business logic/data access:** `app/crud.py` contains the task/comment
-  persistence operations used by routes.
-- **Tests:** `tests/` contains isolated-database API/auth integration,
-  regression, CRUD, edge-case, and query-count tests.
+- `app/main.py` builds the FastAPI application, lifespan, and routes.
+- `app/routes/` contains authentication and task/comment endpoints.
+- `app/schemas.py` defines request validation and response shapes.
+- `app/models.py` and `app/database.py` define SQLAlchemy persistence.
+- `app/crud.py` contains task/comment data operations.
+- `app/security.py` contains password hashing, JWT handling, and bearer validation.
+- `tests/` covers HTTP integration and regression behavior.
 
-The task and comment data remains shared across authenticated accounts; this
-implementation does not add per-user ownership.
+Authenticated users continue to share existing task/comment data; per-user ownership isolation is outside this project scope.
 
-## 4. Authentication
+## 4. Authentication Architecture
 
-`POST /auth/register` validates and normalizes an email, checks password
-requirements, stores an Argon2id hash, and returns a public user response.
-Duplicate email addresses return HTTP 409. `POST /auth/login` verifies the
-password and returns a signed HS256 JWT with an expiration; invalid user/password
-combinations share a generic HTTP 401 response. Token lifetime defaults to 30
-minutes and is configurable from 1 to 1440 minutes.
+Registration stores an Argon2id password hash. Login validates credentials and returns an expiring HS256 JWT. The signing key is runtime configuration, not committed source. Public responses omit password data.
 
-Task, comment, filtering, and statistics endpoints require a valid bearer token.
-Missing, malformed, expired, incorrectly signed, or otherwise invalid tokens
-receive HTTP 401 with a Bearer challenge. Configure a random
-`AUTH_SECRET_KEY` of at least 32 bytes in the process environment. The example
-placeholder is rejected. Do not commit secrets or `.env` files.
+## 5. API Authentication Flow
 
-## 5. Integration Testing Strategy
+Register at `/auth/register` and log in at `/auth/login`; for protected task/comment requests, include the returned token as a Bearer credential in the HTTP authorization header.
 
-Integration tests call the FastAPI application through its HTTP test client
-while using a fresh in-memory SQLite database. This exercises request parsing,
-routes, auth dependencies, schemas, database persistence, task business logic,
-and HTTP response handling together. No external database or service is needed.
+## 6. Integration Testing Strategy
 
-Representative scenarios include registration and password-hash persistence,
-duplicate registration, valid/invalid login, expired/malformed/invalid tokens,
-unauthenticated protected routes, and a registered-user task/comment lifecycle
-with list filters, statistics, and deletion.
+FastAPI TestClient exercises real HTTP routing, validation, authentication, persistence, and response handling. Tests use isolated in-memory SQLite databases.
 
-## 6. Error Handling
+## 7. Regression Testing
 
-- Invalid request data: HTTP 422.
-- Duplicate registration: HTTP 409.
-- Invalid login credentials: generic HTTP 401.
-- Missing, malformed, or expired bearer token: HTTP 401.
-- Unknown task: HTTP 404 with a clean resource-specific message.
+Regression tests protect inherited task behavior, including validation, filters, missing-resource handling, and task/comment operations.
 
-## 7. CI Pipeline
+## 8. Test Environment
 
-`.github/workflows/ci-cd.yml` runs on pushes to `main` and pull requests
-targeting `main`:
+Local verification used Python 3.14.3 and isolated SQLite test databases. No hosted database or production infrastructure is required.
 
-Code change → GitHub Actions → install dependencies → Ruff → pytest
-
-It sets up Python 3.14, upgrades pip, installs `requirements.txt`, runs
-`python -m ruff check app tests scripts benchmarks`, then runs
-`python -m pytest -q`. A failure in either check fails the CI job.
-
-## 8. Simulated CD
-
-After successful CI, the `simulated-cd` job runs
-`python scripts/ci/simulate_deployment.py`. The script checks required files,
-imports the FastAPI app, runs application startup, and calls `/health`. It uses
-a generated per-run signing key and a temporary SQLite file that is closed and
-removed after validation.
-
-CI success → deployment gate → application validation → startup/health →
-simulated deployment
-
-This is **not** a production deployment and does not contact cloud
-infrastructure or require cloud credentials.
-
-## 9. Test Results
-
-Final local verification on Python 3.14.3:
-
-- Full pytest suite: **125 passed**, 2 existing deprecation warnings.
-- Authentication integration tests: **17 passed**, 2 warnings.
-- Existing task API/task lifecycle tests (`test_api.py` and `test_tasks.py`):
-  **32 passed**, 2 warnings.
-- Regression tests: **8 passed**, 2 warnings.
-- Ruff: **All checks passed!**
-- HTTP auth/protected task smoke scripts: recorded with command output in the
-  final validation artifact.
-- Simulated deployment: PASS; startup and `/health` returned HTTP 200.
-- YAML/workflow/security checks: PASS.
-
-See `artifacts/final_week5_validation.txt` for commands and captured outputs.
-GitHub-hosted CI has not run.
-
-## 10. Security
-
-Passwords are Argon2id-hashed; user responses omit password/hash fields.
-Authentication signing keys are supplied at runtime, have minimum length
-validation, and reject the sample placeholder. Tokens are signed, time-limited,
-and validated for issuer, claims, type, and subject. Tests exercise invalid and
-expired tokens. `.gitignore` excludes `.env` and local database files. No Git
-metadata is present, so repository history/remote scanning is unavailable.
-
-## 11. Repository Structure
-
-```text
-app/                    FastAPI app, routes, schemas, models, CRUD, auth
-tests/                  HTTP integration, regression, and other tests
-scripts/ci/             Simulated deployment validation
-scripts/                Smoke and inherited Week 4 utility scripts
-benchmarks/             Inherited benchmark and Locust scenarios
-.github/workflows/      GitHub Actions CI and simulated CD
-docs/                   Week 5 architecture and pipeline documentation
-report/                 Final Markdown/DOCX report and submission description
-artifacts/              Captured test, smoke, security, and pipeline evidence
-```
-
-## 12. Installation
-
-Use Python 3.14 (locally verified as 3.14.3):
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-```
-
-## 13. Running Tests
+## 9. Test Commands
 
 ```powershell
 python -m pytest -q
 python -m pytest tests/test_auth_integration.py -q
-python -m pytest tests/test_api.py tests/test_tasks.py -q
 python -m pytest tests/test_regression.py -q
 python -m ruff check app tests scripts benchmarks
-```
-
-## 14. Running Authentication
-
-Set a fresh key in the current PowerShell process; do not paste a real key into
-source files or commit it:
-
-```powershell
-$env:AUTH_SECRET_KEY = python -c "import secrets; print(secrets.token_urlsafe(48))"
-$env:ACCESS_TOKEN_EXPIRE_MINUTES = "30"
-python -m uvicorn app.main:app --reload
-```
-
-Register at `/auth/register`, log in at `/auth/login`, then provide the returned
-token as `Authorization: Bearer <access_token>` when calling task endpoints.
-
-## 15. Running CI/CD Simulation
-
-```powershell
-python -m ruff check app tests scripts benchmarks
-python -m pytest -q
 python scripts/ci/simulate_deployment.py
 ```
 
-The simulator reports actual file, import, startup/health, gate, and final
-results and returns a non-zero exit code on failure.
-Run `python scripts/ci/validate_pipeline.py` to validate workflow triggers,
-commands, CI-to-CD dependency, safety checks, and repeatable simulation output.
+## 10. Authentication Test Coverage
 
-## 16. Known Limitations
+Authentication cases include registration, duplicate accounts, valid/invalid credentials, password-hash persistence, token claims and expiry, invalid tokens, missing credentials, and protected API access.
 
-- The project has no Git metadata or configured remote. GitHub-hosted workflow
-  execution is not verified.
-- YuvaIntern requires a GitHub project URL for the technical internship
-  submission; configure and verify a remote before submitting.
-- The deployment job is a local/CI validation simulation, not production CD.
-- Existing Starlette/httpx and AnyIO test-client deprecation warnings appear
-  during pytest; they do not fail the current test run.
-- Task data is shared among authenticated users; ownership isolation, token
-  revocation, and login rate limiting are not implemented.
-- The original Week 4 performance artifacts remain historical evidence; this
-  phase did not rerun expensive performance/load suites.
+## 11. CI Pipeline
+
+The workflow checks out the repository, configures Python 3.14, installs dependencies, runs Ruff, and runs the complete pytest suite. Ruff or pytest failure fails CI.
+
+## 12. GitHub Actions Workflow
+
+`.github/workflows/ci-cd.yml` triggers for pushes to `main` and pull requests targeting `main`. The GitHub repository is https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. Hosted run 37741348125 completed successfully; both CI and Simulated deployment jobs succeeded.
+
+## 13. Simulated Continuous Deployment
+
+The deployment simulator validates required files, imports the application, starts its lifespan, and checks `/health`. It uses temporary local resources and does not perform production deployment or contact cloud infrastructure.
+
+## 14. CI → CD Gate
+
+The simulated deployment job requires CI success. In hosted run 37741348125, CI completed successfully before the simulated deployment job, which also passed.
+
+## 15. Security Considerations
+
+Passwords are hashed with Argon2id; JWT signing keys come from runtime configuration. `.gitignore` excludes real environment files, caches, bytecode, and local database files. The security scan found no suspicious credentials in tracked content. This is not a claim of complete security.
+
+## 16. Validation Results
+
+- Local full pytest: **125 passed, 2 deprecation warnings**.
+- Authentication integration tests: **17 passed**.
+- Regression tests: **8 passed**.
+- Ruff: **PASS**.
+- Simulated CD: **PASS**.
+- GitHub Actions run 37741348125: **completed / success**, with both jobs successful.
+
+Older captured audit outputs are historical snapshots from before the remote
+was configured. The current status is recorded in this README and
+`artifacts/final_submission_audit.txt`.
+
+## 17. Known Limitations
+
+The deployment is simulated, not production CD. Upstream test-client deprecation warnings remain. Task data is shared across authenticated accounts; ownership isolation, token revocation, and login rate limiting are not implemented. No production-capacity or security guarantee is claimed.
+
+## 18. Repository Structure
+
+```text
+app/                    application modules
+tests/                  integration and regression tests
+scripts/ci/             pipeline validation and simulated deployment
+.github/workflows/      GitHub Actions workflow
+artifacts/              actual local validation and audit evidence
+report/                 final report, DOCX, and submission description
+docs/                   authentication and CI/CD documentation
+benchmarks/              retained inherited Week 4 benchmark material
+```
+
+## 19. Reproduction Instructions
+
+Install dependencies from `requirements.txt`, set a fresh `AUTH_SECRET_KEY` in the runtime environment, then execute the commands in section 9. Never commit a real secret or `.env` file.
+
+## 20. Week 5 Conclusion
+
+The project demonstrates tested integration across API, authentication, and persistence modules and a CI-gated deployment simulation. The GitHub workflow and its successful run are documented above. This remains an educational project and does not deploy to production.

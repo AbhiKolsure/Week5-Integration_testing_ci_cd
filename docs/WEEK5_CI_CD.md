@@ -49,5 +49,9 @@ actual output is recorded in:
 - `python scripts/ci/validate_pipeline.py` checks workflow structure, safety,
   and repeatable simulator output.
 
-The Week 5 project copy currently has no Git metadata or configured remote.
-Therefore, no push, pull request, or GitHub-hosted workflow run is claimed.
+The GitHub remote is configured as
+https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. GitHub Actions
+run 37741348125 completed successfully; both CI and Simulated deployment jobs
+succeeded. Ruff and the full pytest step passed in the hosted CI job. The
+simulated deployment job passed only after CI succeeded. This is deployment
+simulation and does not deploy to production.

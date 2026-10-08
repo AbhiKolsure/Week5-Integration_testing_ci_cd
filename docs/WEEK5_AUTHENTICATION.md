@@ -116,10 +116,11 @@ No external service or persistent runtime database is used by these tests.
 - This implementation has no token revocation or rate limiting. It also does
   not isolate shared task data by user; both behaviors are outside this phase's
   stated scope.
-- The Week 5 target directory has no Git metadata. Therefore, a Git history or
-  remote scan for committed credentials cannot be claimed from this local
-  checkout. No `.env` file is present in the target, and the example file uses
-  a non-secret placeholder.
+- The GitHub repository is
+  https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. Current
+  tracked-file secret and environment checks are recorded in
+  `artifacts/final_git_security_check.txt`; no `.env` file is present and the
+  example file contains only a non-secret placeholder.
 
 ## Local validation record
 

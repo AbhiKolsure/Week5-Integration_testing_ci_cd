@@ -1,24 +1,73 @@
 WEEK 5 FINAL SUBMISSION AUDIT
+Audit date: 2026-10-08
+Repository root: C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing
 
-PROJECT: PASS
+PROJECT AUDIT: PASS
+Application, tests, scripts, workflow, artifacts, docs, report, README, requirements, and pyproject configuration are present.
 
 AUTHENTICATION: PASS
-PASSWORD SECURITY: PASS
-JWT SECURITY: PASS
-PROTECTED ENDPOINTS: PASS
-INTEGRATION TESTS: PASS
-REGRESSION TESTS: PASS
-FULL TEST SUITE: PASS
-RUFF: PASS
-CI WORKFLOW: PASS
-GITHUB ACTIONS: NOT VERIFIED
-SIMULATED CD: PASS
-CI ? CD GATE: PASS
-SECURITY SCAN: PASS
-SECRETS: PASS
-GIT REPOSITORY: FAIL
-README: PASS
-DOCUMENTATION: PASS
-WEEK 4 PRESERVATION: PASS
+Registration/login routes, security helpers, and authentication integration coverage are present.
 
-FINAL STATUS: NOT READY
+PASSWORD SECURITY: PASS
+Passwords use Argon2id hashes; tests verify persisted hash behavior and public response omission.
+
+JWT: PASS
+Signed, expiring JWT behavior and invalid/expired token rejection are covered by integration tests.
+
+PROTECTED APIS: PASS
+Task and comment routes enforce bearer authentication; tests cover missing and invalid credentials.
+
+INTEGRATION TESTS: PASS
+Captured local authentication integration result: 17 passed. The current successful hosted CI pytest step also passed.
+
+REGRESSION TESTS: PASS
+Captured local regression result: 8 passed. The current successful hosted CI pytest step also passed.
+
+FULL PYTEST: PASS — 125 passed, 2 warnings
+Captured local complete suite: 125 passed with 2 deprecation warnings. The hosted complete pytest step succeeded.
+
+RUFF: PASS
+Captured local Ruff check passed. The hosted Ruff step succeeded.
+
+CI WORKFLOW: PASS
+.github/workflows/ci-cd.yml runs on push and pull_request to main, installs dependencies, runs Ruff and full pytest, and gates simulated deployment on CI success.
+
+GITHUB ACTIONS: PASS — run 37741348125
+The current verified run completed with success on main. Both jobs (CI and Simulated deployment) succeeded. Run URL: https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd/actions/runs/37741348125
+
+SIMULATED CD: PASS
+The captured simulator verifies required files, app import, startup/health (HTTP 200), and the deployment gate. Hosted simulated deployment job succeeded.
+
+CI → CD GATE: PASS
+Workflow dependency requires successful CI before simulated deployment; the hosted run shows both jobs succeeded in that order.
+
+SECURITY: PASS
+Security evidence covers authentication controls, workflow read-only permissions, environment-file handling, and repository ignore rules.
+
+SECRETS: PASS
+artifacts/final_git_security_check.txt reports no suspicious credentials in tracked files, no tracked real .env, and no tracked caches/database/private-key paths.
+
+README: PASS
+Root and packaged Week 5 README files describe the current repository, successful Actions run, actual local test results, and simulated-only deployment.
+
+FINAL REPORT: PASS
+Root and packaged Markdown reports state the current GitHub URL and successful run; no production deployment claim is made.
+
+DOCX: PASS
+The root final report DOCX and both packaged DOCX reports were regenerated from the corrected current Week 5 report Markdown. They include the repository URL and successful hosted run.
+
+WEEK 4 PRESERVATION: PASS
+Inherited Week 4 benchmark/performance artifacts and scripts are present in the repository and package, including baseline/final benchmark records, performance artifacts, benchmarks, and performance scripts. Week 5 is an isolated extension; these artifacts were retained and expensive load tests were not rerun.
+
+GITHUB REMOTE: PASS
+origin is configured as https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. Branch main tracks origin/main.
+
+GITHUB REPOSITORY: PASS
+https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd
+
+WORKING TREE: CLEAN BEFORE THESE REQUESTED DOCUMENTATION/AUDIT UPDATES; final clean state will be verified after commit and push.
+
+EVIDENCE NOTE
+Older captured local validation/audit snapshots retain the remote status as it was when those snapshots were recorded. They are historical evidence; the current remote and hosted-run state is reflected in this audit and the updated active documentation.
+
+FINAL STATUS: PENDING FINAL COMMIT, PUSH, CLEAN-STATUS CHECK, AND NEW GITHUB ACTIONS RUN

@@ -2,7 +2,7 @@
 
 ## 1. Cover Page
 
-Week 5 ? Integration Testing and Continuous Deployment Simulation
+Week 5 — Integration Testing and Continuous Deployment Simulation
 
 Educational internship project using an isolated Week 5 copy of the inherited Week 4 FastAPI backend.
 
@@ -64,7 +64,7 @@ The workflow file `.github/workflows/ci-cd.yml` runs on pushes to `main` and pul
 
 ## 16. GitHub Actions
 
-GitHub Actions was configured locally in the project repository structure. The workflow follows the actual commands that were validated in the local environment. No GitHub remote was configured for this project, so hosted workflow execution remains unverified and no claim is made about GitHub-hosted CI success.
+The GitHub remote is configured at https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. GitHub Actions run 37741348125 completed successfully on `main`; the CI and Simulated deployment jobs both succeeded. The successful CI job executed dependency installation, Ruff, and the complete pytest suite. Older captured local audit outputs are historical snapshots from before remote configuration.
 
 ## 17. Simulated CD
 
@@ -88,14 +88,15 @@ Measured against the actual project environment:
 - Regression tests: 8 passed, 2 warnings
 - Ruff: All checks passed
 - Simulated deployment: PASS
+- GitHub Actions run 37741348125: completed / success; both workflow jobs succeeded.
 
 ## 21. Actual CI/CD Results
 
-The workflow and simulation were validated locally with the same commands used in the CI pipeline. The project recorded successful local execution of Ruff, pytest, and the simulated deployment gate. GitHub-hosted workflow execution was not performed because the repository does not include a configured remote.
+Local validation used the same Ruff, pytest, and simulated deployment commands configured in CI. In addition, GitHub-hosted run 37741348125 completed successfully with both workflow jobs passing. The CI-to-simulated-CD gate passed: simulated deployment ran only after CI success.
 
 ## 22. Known Limitations
 
-The project is not a production deployment system. It does not verify GitHub-hosted actions without a configured GitHub remote. The app uses local SQLite for testing and does not claim production-scale capacity or security guarantees. Some upstream deprecation warnings remain visible in the dependency stack, but they do not fail the current test suite.
+The project is not a production deployment system. The app uses local SQLite for testing and does not claim production-scale capacity or security guarantees. Some upstream deprecation warnings remain visible in the dependency stack, but they do not fail the current test suite. GitHub run 37741348125 verifies the commit it tested; later commits require their own workflow verification.
 
 ## 23. Repository Structure
 
@@ -125,4 +126,4 @@ python scripts/ci/simulate_deployment.py
 
 ## 25. Conclusion
 
-The Week 5 project delivers a measured, evidence-based local validation for backend integration, authentication, CI, and deployment simulation. It provides the required test coverage and pipeline design without claiming production deployment or GitHub-hosted workflow execution beyond the actual local evidence collected.
+The Week 5 project delivers measured, evidence-based validation for backend integration, authentication, CI, and deployment simulation. GitHub Actions run 37741348125 succeeded in both jobs. The simulated deployment validates application readiness only and is not a production deployment.

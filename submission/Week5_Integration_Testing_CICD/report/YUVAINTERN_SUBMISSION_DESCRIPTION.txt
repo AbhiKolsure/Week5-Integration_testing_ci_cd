@@ -1,40 +1,9 @@
-This Week 5 project extends an existing FastAPI task-management backend with
-authentication, integration testing, and a simulated continuous integration
-and deployment pipeline. The work focuses on verifying that the API routes,
-validation layer, authentication dependencies, database persistence, task
-and comment operations, and HTTP error responses function together.
+This Week 5 educational internship project extends an inherited FastAPI task-management backend with authentication, integration testing, regression coverage, GitHub Actions CI, and a simulated deployment validation stage. The project brings together API routes, request and response schemas, authentication dependencies, database sessions, ORM models, CRUD operations, and HTTP error handling. Integration testing is important here because individual modules may work alone while failures can still occur when a user request crosses authentication, validation, persistence, and response layers.
 
-Account registration validates and normalizes email addresses and stores
-passwords as Argon2id hashes rather than plaintext. Login issues a signed,
-expiring JWT access token. The signing key is provided through runtime
-configuration, checked for minimum length, and the example placeholder is
-rejected. Authenticated task endpoints reject missing, malformed, expired, or
-otherwise invalid tokens. Public user responses do not expose password hashes,
-and invalid login responses do not reveal whether an account exists.
+Account registration validates user input and stores passwords as Argon2id hashes rather than plaintext. Login verifies credentials and issues a signed, expiring JWT bearer token. Protected task and comment APIs reject missing, malformed, expired, or invalid credentials. Public responses do not reveal password hashes, and invalid login responses use a generic error. The signing secret is supplied through runtime configuration and is not committed as a real credential.
 
-The integration tests exercise the application through HTTP using isolated
-in-memory SQLite databases. They cover registration, login, duplicate
-accounts, request validation, password persistence, token validation, task
-creation and modification, filtering, statistics, comment creation/listing,
-deletion, and expected error responses. Existing regression tests protect
-previous task API fixes. The complete locally run pytest suite reported 125
-passed tests; the focused authentication suite reported 17 passed, and the
-regression suite reported 8 passed. Two existing test-client deprecation
-warnings were reported and did not fail the test runs. Ruff static analysis
-reported that all checks passed.
+The integration test suite uses FastAPI TestClient with isolated in-memory SQLite databases. It covers registration, duplicate accounts, successful and unsuccessful logins, password-hash persistence, token claims and expiry, invalid bearer tokens, protected APIs, and task/comment lifecycle operations. Regression tests verify inherited API behavior, including validation, filters, missing resources, and task/comment interactions. Local verification reported 125 passed tests with 2 deprecation warnings, 17 authentication integration tests passed, and 8 regression tests passed. Ruff static analysis passed.
 
-The GitHub Actions workflow is configured to run on pushes to the main branch
-and pull requests targeting main. It installs the project's requirements,
-runs Ruff, and executes the complete pytest suite. Its simulated deployment
-job depends on CI success and validates required files, application import,
-startup, and the health endpoint. The simulation uses only a temporary local
-SQLite database and an ephemeral generated key. It does not deploy to
-production or contact cloud infrastructure.
+GitHub Actions is configured for pushes to `main` and pull requests targeting `main`. It installs dependencies, runs Ruff, and executes the full pytest suite. The simulated deployment job depends on successful CI and validates required files, application import, startup, and health without deploying to production or contacting cloud infrastructure. GitHub Actions run 37741348125 completed successfully; both CI and Simulated deployment jobs succeeded. The CI-to-simulated-CD gate passed.
 
-Local HTTP smoke tests exercised application health, registration/login,
-authenticated task and comment operations, validation, and error handling.
-The simulated deployment completed successfully in local validation. The
-project has no configured GitHub remote, so GitHub-hosted workflow execution
-has not been verified. This submission includes the project documentation and
-actual validation evidence, and makes no claim of remote CI success or real
-production deployment.
+Security validation checked secret patterns, environment-file handling, workflow permissions, and ignore rules. It found no suspicious credentials in tracked content. The Week 4 performance evidence remains preserved in the isolated Week 5 repository; expensive load tests were not rerun. The final project and report are available at https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. This is an educational project and simulated deployment exercise, not a production deployment or production-capacity claim.

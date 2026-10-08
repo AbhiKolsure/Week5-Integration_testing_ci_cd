@@ -16,8 +16,11 @@ The final local validation ran the complete pytest suite, targeted
 authentication, task API/task lifecycle and regression tests, Ruff, two HTTP
 smoke scripts, application startup/health validation, and workflow/security
 checks. The complete suite reported 125 passing tests and two existing
-deprecation warnings. The simulated deployment reported PASS. No GitHub remote
-is configured; GitHub-hosted workflow execution is therefore not claimed.
+deprecation warnings. Ruff and simulated deployment passed. The configured
+GitHub repository is
+https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd. GitHub Actions
+run 37741348125 completed successfully, with both CI and simulated deployment
+jobs passing.
 
 ## 2. Official Task Requirements
 
@@ -103,7 +106,7 @@ runtime database.
 
 Invalid schemas return HTTP 422. Duplicate email registration returns HTTP 409.
 Invalid login returns a generic HTTP 401. Missing or invalid tokens return HTTP
-401 with a Bearer challenge. Unknown tasks return HTTP 404 without exposing
+401. Unknown tasks return HTTP 404 without exposing
 database exception details. Tests assert status codes and relevant response
 payloads.
 
@@ -149,9 +152,10 @@ deployment.
 
 Automated scans/checks found no apparent real credentials in the inspected
 project files. The project contains synthetic test-only key strings used to
-exercise auth behavior and a clearly unusable example placeholder. The folder
-has no `.git` metadata, so Git history and tracked commit contents could not be
-audited.
+exercise auth behavior and a clearly unusable example placeholder. The
+repository is configured with the GitHub remote above; current tracked-file
+secret and environment checks are recorded in
+`artifacts/final_git_security_check.txt`.
 
 ## 11. Validation Results
 
@@ -177,12 +181,17 @@ The test client reports Starlette/httpx and AnyIO deprecation warnings. They
 did not fail the tests. No Week 4 performance/load suite was rerun for this
 phase.
 
-GitHub-hosted workflow execution: NOT VERIFIED — repository remote is not configured.
+GitHub Actions run 37741348125 completed successfully on `main`; both workflow
+jobs (CI and Simulated deployment) succeeded. Earlier captured audit outputs
+are historical snapshots of the pre-remote state. The run is available at
+https://github.com/AbhiKolsure/Week5-Integration_testing_ci_cd/actions/runs/37741348125.
+The CI-to-simulated-CD gate passed. This is simulated deployment validation,
+not production deployment.
 
 ## 12. Known Limitations
 
-- There is no Git repository metadata or configured GitHub remote. No remote
-  workflow result, branch, or commit history can be verified.
+- GitHub Actions run 37741348125 is verified for the commit it tested. Check
+  the workflow status for any later commit before relying on it.
 - Simulated CD is validation, not production deployment.
 - Test execution reports two existing deprecation warnings.
 - Task data is shared among authenticated accounts; account ownership
@@ -217,6 +226,6 @@ and run `python -m uvicorn app.main:app --reload`. Never commit a real key or
 
 The local evidence verifies integrated authentication/data flows, task and
 comment behavior, expected error responses, regressions, static analysis, and
-the simulated CI-to-CD validation path. The workflow is configured but has not
-been run by GitHub because no remote exists. No production deployment or
-GitHub-hosted success is claimed.
+the simulated CI-to-CD validation path. The configured GitHub Actions workflow
+also completed successfully in both jobs for run 37741348125. This project
+performs simulated deployment validation only; it does not deploy to production.
