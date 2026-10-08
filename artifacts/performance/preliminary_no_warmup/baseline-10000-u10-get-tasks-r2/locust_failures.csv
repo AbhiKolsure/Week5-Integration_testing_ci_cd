@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+GET,/tasks?limit=50,"ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine', None, 10053, None)",3,2026-10-03T08:52:00Z,2026-10-03T08:52:00Z

@@ -1,0 +1,50 @@
+Week 5 Phase 2 focused security verification
+Scope: isolated Week 5 project copy only
+Date: 2026-10-08
+
+Verified implementation and behavior:
+
+- Passwords are hashed with Argon2id. The authentication integration tests
+  registered a user, read the persisted database row, confirmed the stored
+  value is an Argon2id hash and not the submitted password, and verified the
+  password against that hash.
+- Registration and login response schemas omit password and password_hash.
+  Registration response behavior was exercised by the auth integration tests.
+- AUTH_SECRET_KEY is obtained from the runtime environment and must be at
+  least 32 bytes; the exact example placeholder is rejected. Application
+  lifespan validates the key and token lifetime; there is no hard-coded
+  production fallback.
+- ACCESS_TOKEN_EXPIRE_MINUTES defaults to 30 and is validated to be between 1
+  and 1440. The local smoke scripts used a generated per-run secret and a
+  temporary database.
+- JWTs are signed with HS256 and include required subject, issuer, issued-at,
+  expiration, and access-token-type claims. Tests exercised successful
+  validation and rejection of expired tokens, invalid signatures, and invalid
+  claims.
+- Task routes require the shared bearer-authentication dependency. Tests and
+  real-HTTP smoke checks observed 401 for missing credentials and successful
+  authenticated task operations.
+- Login failures for unknown users and incorrect passwords return the same
+  generic response. Missing/invalid bearer credentials return a generic 401
+  response and do not include internal exception details.
+- .env.example contains an unusable placeholder and .gitignore excludes .env.
+  No .env file exists in the Week 5 target directory.
+- The target directory has no .git metadata. It is therefore not possible to
+  verify commit history or claim that Git-tracked credentials have been
+  audited. The original Week 4 source project was not modified.
+
+Recorded command results:
+
+- python -m pytest tests/test_auth_integration.py -v: 17 passed.
+- python -m pytest tests/test_regression.py -q: 8 passed.
+- python -m pytest -q: 125 passed; 2 deprecation warnings.
+- python -m ruff check app tests scripts benchmarks: All checks passed.
+- python scripts/smoke_check.py: checks failed: 0.
+- python scripts/final_api_smoke.py: checks failed: 0.
+- python scripts/performance/run_load_test.py --tasks 20 --users 1
+  --spawn-rate 1 --run-time 12s --warmup 0 --no-process-sampling:
+  37 authenticated requests, 0 failures. This was a small harness smoke check,
+  not a performance claim.
+
+No CI/CD configuration was added or run in Phase 2. No remote security scan,
+deployment, or Git-history scan is claimed.

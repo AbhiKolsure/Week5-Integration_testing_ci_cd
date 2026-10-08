@@ -1,0 +1,28 @@
+Controlled 5-run baseline summary
+Configuration: GET /tasks (all scenarios), 10,000 tasks x 1 comment, 10 users, spawn 2.0/s, 30s run, 5s warm-up
+Run label: phase5_baseline_rN
+Date: 2026-10-07
+
+Ranked run summary (5 runs)
+Run  Requests  Failures  RPS        AvgMs   MedMs  P95Ms  P99Ms
+5     851       0          29.12      14.59   12      32      48    
+1     862       0          29.47      14.37   12      29      39    
+2     873       0          29.89      14.04   12      31      43    
+4     873       0          29.92      12.16   10      26      36    
+3     892       0          30.49      13.16   12      24      33    
+
+Consistency statistics (requests): min=851.0, max=892.0, mean=870.20, spread=41.0
+Consistency statistics (RPS): mean=29.78, min=29.12, max=30.49
+Consistency statistics (avg latency ms): mean=13.66, min=12.16, max=14.59
+Consistency statistics (median latency ms): mean=11.60, min=10, max=12
+Consistency statistics (p95 latency ms): mean=28.40, min=24, max=32
+Consistency statistics (p99 latency ms): mean=39.80, min=33, max=48
+
+Total requests across 5 runs: 4351.0
+Failed requests across 5 runs: 0.0
+Results stable: YES - 5 runs within 41.0 requests (min 851.0 vs max 892.0), zero failures
+Baseline ready for optimization comparison: YES
+
+Raw artifact locations:
+  artifacts/performance/phase5_controlled_baseline/phase5_baseline_rN/
+    summary.json, run_metadata.json, summary.md, locust_stats.csv, locust_report.html, locust_stdout.txt

@@ -1,0 +1,32 @@
+======================================================================================================================
+Week 4 Phase 3 baseline - 1000 tasks (generated, do not edit by hand)
+======================================================================================================================
+duration per run: 20s    repeats per configuration: 2
+database: SQLite file (throw-away per run)    server: single uvicorn process
+
+target                 users  runs  requests  failed   fail%      rps   avg ms   med ms   p95 ms   p99 ms    cpu%
+-----------------------------------------------------------------------------------------------------------------
+GET /tasks                10     2      1083       0   0.000    28.41     9.87      8.5     17.0     28.5    18.1
+GET /tasks                25     2      2606       0   0.000    68.75    25.37     19.5     65.0    102.5    58.1
+GET /tasks                50     2      3523       0   0.000    97.35   152.96    150.0    290.0    375.0   130.4
+GET /tasks/stats          10     2      1030       0   0.000    28.61    11.12     10.0     18.0     32.5    16.9
+GET /tasks/stats          25     2      2613       0   0.000    67.94    21.29     16.5     48.0     87.0    52.9
+GET /tasks/stats          50     2      4109       0   0.000   113.75    86.51     77.0    195.0    270.0   108.6
+
+rps/avg/med/p95/p99/cpu are the MEAN over the repeated runs of that configuration.
+
+individual runs (raw values as measured)
+----------------------------------------------------------------------------------------------------------------------
+run label                                             requests  failed      rps   avg ms   med ms   p95 ms   p99 ms
+baseline-1000-u10-get-tasks-r1                             546       0    28.77    10.06      9.0     17.0     25.0
+baseline-1000-u10-get-tasks-r2                             537       0    28.05     9.68      8.0     17.0     32.0
+baseline-1000-u10-get-tasks-stats-r1                       494       0    27.64    10.81     10.0     18.0     33.0
+baseline-1000-u10-get-tasks-stats-r2                       536       0    29.58    11.42     10.0     18.0     32.0
+baseline-1000-u25-get-tasks-r1                            1303       0    68.76    23.79     18.0     60.0     95.0
+baseline-1000-u25-get-tasks-r2                            1303       0    68.74    26.95     21.0     70.0    110.0
+baseline-1000-u25-get-tasks-stats-r1                      1302       0    67.34    23.46     18.0     53.0    110.0
+baseline-1000-u25-get-tasks-stats-r2                      1311       0    68.53    19.12     15.0     43.0     64.0
+baseline-1000-u50-get-tasks-r1                            1853       0   102.63   131.89    130.0    270.0    340.0
+baseline-1000-u50-get-tasks-r2                            1670       0    92.08   174.04    170.0    310.0    410.0
+baseline-1000-u50-get-tasks-stats-r1                      2104       0   116.41    78.77     71.0    170.0    220.0
+baseline-1000-u50-get-tasks-stats-r2                      2005       0   111.08    94.25     83.0    220.0    320.0

@@ -1,0 +1,22 @@
+WEEK 5 FINAL PROJECT AUDIT
+
+Project root: isolated Week 5 working copy only.
+
+Audited areas:
+- FastAPI application, task/comment routes, schemas, CRUD, SQLAlchemy models and SQLite configuration.
+- Registration/login, Argon2id password hashing, JWT validation, and protected route dependencies.
+- HTTP integration, validation/error, task lifecycle, and regression tests.
+- GitHub Actions workflow, simulated deployment script, and repeatable workflow validator.
+- README, Week 5 documentation, Markdown report, YuvaIntern description, DOCX, and evidence artifacts.
+- requirements.txt, pyproject.toml, .env.example, and .gitignore.
+
+Findings and handling:
+- No unexpected source/debug files were removed.
+- Existing Week 4 performance evidence and inherited project artifacts were preserved in the working project; expensive performance/load tests were not rerun.
+- The pre-existing week3_tasks.db runtime file was left untouched. It is covered by the *.db ignore rule and excluded from the curated submission package.
+- Python/pytest/Ruff cache directories are generated files covered by .gitignore. They were not recursively cleaned.
+- No real .env file is present. High-confidence secret-pattern scans are recorded in final_security_audit.txt.
+- Git metadata is absent; branch/history and GitHub remote are unavailable. No Git initialization or push was performed.
+- The submission package contains Week 5 source, tests, CI files, documentation, report, and relevant evidence; it excludes runtime databases, virtual environments, caches, and inherited raw performance result trees.
+
+No changes were made to the original Week 4 source project.

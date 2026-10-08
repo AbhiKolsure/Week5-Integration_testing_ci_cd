@@ -1,0 +1,150 @@
+Week 5 Phase 3 final local validation; actual subprocess output follows.
+$ C:\Program Files\Python314\python.exe --version
+Python 3.14.3
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m pip install --upgrade pip
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: pip in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (26.2.1)
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m pip install -r requirements.txt
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: fastapi<1.0,>=0.115 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 3)) (0.141.1)
+Requirement already satisfied: uvicorn>=0.30 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (0.52.4)
+Requirement already satisfied: pydantic<3.0,>=2.7 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 5)) (2.13.5)
+Requirement already satisfied: SQLAlchemy<3.0,>=2.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 6)) (2.0.52)
+Requirement already satisfied: PyJWT<3.0,>=2.8 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 7)) (2.14.0)
+Requirement already satisfied: argon2-cffi>=23.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 8)) (25.1.0)
+Requirement already satisfied: email-validator>=2.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 9)) (2.3.0)
+Requirement already satisfied: pytest>=8.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 12)) (8.4.2)
+Requirement already satisfied: httpx>=0.27 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 13)) (0.28.1)
+Requirement already satisfied: python-docx>=1.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 14)) (1.2.0)
+Requirement already satisfied: ruff>=0.5 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 15)) (0.16.8)
+Requirement already satisfied: locust>=2.20 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from -r requirements.txt (line 18)) (2.46.6)
+Requirement already satisfied: starlette>=0.46.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from fastapi<1.0,>=0.115->-r requirements.txt (line 3)) (1.6.0)
+Requirement already satisfied: typing-extensions>=4.8.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from fastapi<1.0,>=0.115->-r requirements.txt (line 3)) (4.16.0)
+Requirement already satisfied: typing-inspection>=0.4.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from fastapi<1.0,>=0.115->-r requirements.txt (line 3)) (0.4.4)
+Requirement already satisfied: annotated-doc>=0.0.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from fastapi<1.0,>=0.115->-r requirements.txt (line 3)) (0.0.5)
+Requirement already satisfied: annotated-types>=0.6.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pydantic<3.0,>=2.7->-r requirements.txt (line 5)) (0.8.0)
+Requirement already satisfied: pydantic-core==2.46.5 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pydantic<3.0,>=2.7->-r requirements.txt (line 5)) (2.46.5)
+Requirement already satisfied: greenlet>=1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from SQLAlchemy<3.0,>=2.0->-r requirements.txt (line 6)) (3.5.5)
+Requirement already satisfied: click>=7.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (8.5.0)
+Requirement already satisfied: h11>=0.8 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn>=0.30->uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (0.16.0)
+Requirement already satisfied: argon2-cffi-bindings in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from argon2-cffi>=23.1->-r requirements.txt (line 8)) (26.1.0)
+Requirement already satisfied: dnspython>=2.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from email-validator>=2.0->-r requirements.txt (line 9)) (2.8.0)
+Requirement already satisfied: idna>=2.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from email-validator>=2.0->-r requirements.txt (line 9)) (3.19)
+Requirement already satisfied: colorama>=0.4 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pytest>=8.0->-r requirements.txt (line 12)) (0.4.6)
+Requirement already satisfied: iniconfig>=1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pytest>=8.0->-r requirements.txt (line 12)) (2.3.0)
+Requirement already satisfied: packaging>=20 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pytest>=8.0->-r requirements.txt (line 12)) (26.3)
+Requirement already satisfied: pluggy<2,>=1.5 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pytest>=8.0->-r requirements.txt (line 12)) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from pytest>=8.0->-r requirements.txt (line 12)) (2.21.0)
+Requirement already satisfied: anyio in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from httpx>=0.27->-r requirements.txt (line 13)) (4.15.1)
+Requirement already satisfied: certifi in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from httpx>=0.27->-r requirements.txt (line 13)) (2026.7.22)
+Requirement already satisfied: httpcore==1.* in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from httpx>=0.27->-r requirements.txt (line 13)) (1.0.9)
+Requirement already satisfied: lxml>=3.1.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from python-docx>=1.1->-r requirements.txt (line 14)) (6.1.3)
+Requirement already satisfied: configargparse>=1.7.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (1.8.0)
+Requirement already satisfied: flask-cors>=3.0.10 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (6.0.5)
+Requirement already satisfied: flask-login>=0.6.3 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (0.6.3)
+Requirement already satisfied: flask>=2.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (3.1.3)
+Requirement already satisfied: gevent>=24.10.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (26.9.0)
+Requirement already satisfied: geventhttpclient>=2.3.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (2.5.1)
+Requirement already satisfied: msgpack>=1.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (1.2.3)
+Requirement already satisfied: psutil>=5.9.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (7.2.2)
+Requirement already satisfied: python-engineio>=4.12.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (4.14.0)
+Requirement already satisfied: python-socketio>=5.13.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from python-socketio[client]>=5.13.0->locust>=2.20->-r requirements.txt (line 18)) (5.17.0)
+Requirement already satisfied: pywin32 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (312)
+Requirement already satisfied: pyzmq>=25.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (27.2.0)
+Requirement already satisfied: requests>=2.32.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (2.34.2)
+Requirement already satisfied: werkzeug>=2.0.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from locust>=2.20->-r requirements.txt (line 18)) (3.1.9)
+Requirement already satisfied: blinker>=1.9.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from flask>=2.0.0->locust>=2.20->-r requirements.txt (line 18)) (1.9.0)
+Requirement already satisfied: itsdangerous>=2.2.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from flask>=2.0.0->locust>=2.20->-r requirements.txt (line 18)) (2.2.0)
+Requirement already satisfied: jinja2>=3.1.2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from flask>=2.0.0->locust>=2.20->-r requirements.txt (line 18)) (3.1.6)
+Requirement already satisfied: markupsafe>=2.1.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from flask>=2.0.0->locust>=2.20->-r requirements.txt (line 18)) (3.0.3)
+Requirement already satisfied: cffi>=2.1.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from gevent>=24.10.1->locust>=2.20->-r requirements.txt (line 18)) (2.1.1)
+Requirement already satisfied: zope.event in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from gevent>=24.10.1->locust>=2.20->-r requirements.txt (line 18)) (6.2)
+Requirement already satisfied: zope.interface in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from gevent>=24.10.1->locust>=2.20->-r requirements.txt (line 18)) (8.6)
+Requirement already satisfied: pycparser in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from cffi>=2.1.1->gevent>=24.10.1->locust>=2.20->-r requirements.txt (line 18)) (3.0)
+Requirement already satisfied: brotli in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from geventhttpclient>=2.3.1->locust>=2.20->-r requirements.txt (line 18)) (1.2.0)
+Requirement already satisfied: simple-websocket>=0.10.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from python-engineio>=4.12.2->locust>=2.20->-r requirements.txt (line 18)) (1.1.0)
+Requirement already satisfied: bidict>=0.21.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from python-socketio>=5.13.0->python-socketio[client]>=5.13.0->locust>=2.20->-r requirements.txt (line 18)) (0.24.1)
+Requirement already satisfied: websocket-client>=0.54.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from python-socketio[client]>=5.13.0->locust>=2.20->-r requirements.txt (line 18)) (1.9.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from requests>=2.32.2->locust>=2.20->-r requirements.txt (line 18)) (3.5.1)
+Requirement already satisfied: urllib3<3,>=1.26 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from requests>=2.32.2->locust>=2.20->-r requirements.txt (line 18)) (2.8.0)
+Requirement already satisfied: wsproto in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from simple-websocket>=0.10.0->python-engineio>=4.12.2->locust>=2.20->-r requirements.txt (line 18)) (1.3.2)
+Requirement already satisfied: httptools>=0.8.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (0.8.0)
+Requirement already satisfied: python-dotenv>=0.13 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (1.2.3)
+Requirement already satisfied: pyyaml>=5.1 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (6.0.3)
+Requirement already satisfied: watchfiles>=0.20 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (1.2.0)
+Requirement already satisfied: websockets>=13.0 in C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages (from uvicorn[standard]>=0.30->-r requirements.txt (line 4)) (16.1.1)
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m ruff check app tests scripts benchmarks
+All checks passed!
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m pytest -q
+........................................................................ [ 57%]
+.....................................................                    [100%]
+============================== warnings summary ===============================
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+125 passed, 2 warnings in 3.56s
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m pytest tests/test_auth_integration.py -q
+.................                                                        [100%]
+============================== warnings summary ===============================
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+17 passed, 2 warnings in 1.16s
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe -m pytest tests/test_regression.py -q
+........                                                                 [100%]
+============================== warnings summary ===============================
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+8 passed, 2 warnings in 0.33s
+
+[exit code: 0]
+
+$ C:\Program Files\Python314\python.exe scripts/ci/simulate_deployment.py
+SIMULATED DEPLOYMENT
+--------------------
+Required files: PASS
+Application import: PASS
+Startup/health validation: PASS (HTTP 200, status='ok')
+Deployment gate: PASS
+Final result: PASS
+C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+
+[exit code: 0]

@@ -1,0 +1,66 @@
+=== python scripts/smoke_check.py ===
+starting: C:\Program Files\Python314\python.exe -m uvicorn app.main:app --port 57095 (cwd=C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing)
+[PASS] uvicorn started and /health answered -> http://127.0.0.1:57095/health
+        payload: {'status': 'ok', 'service': 'Week3 Backend Debugging API', 'version': '1.0.0'}
+[PASS] unauthenticated task request is rejected -> HTTP 401
+[PASS] account registration succeeds -> HTTP 201
+[PASS] login returns an expiring bearer token -> HTTP 200
+[PASS] OpenAPI document exposes every route -> ['/auth/login', '/auth/register', '/health', '/tasks', '/tasks/stats', '/tasks/{task_id}', '/tasks/{task_id}/comments']
+[PASS] POST /tasks answers 201 -> HTTP 201
+[PASS] GET /tasks/{id} answers 200 -> HTTP 200
+[PASS] PATCH /tasks/{id} stores the new status -> HTTP 200
+[PASS] POST /tasks/{id}/comments answers 201 -> HTTP 201
+[PASS] GET /tasks?status=&q= applies both filters -> HTTP 200 total=1
+[PASS] GET /tasks/stats aggregates the backlog -> HTTP 200 {'total': 1, 'completed': 0, 'overdue': 0, 'completion_rate': 0.0, 'by_status': {'pending': 0, 'in_progress': 1, 'completed': 0}, 'by_priority': {'low': 0, 'medium': 0, 'high': 1}, 'total_comments': 1, 'average_comments_per_task': 1.0}
+[PASS] DELETE /tasks/{id} answers 204 -> HTTP 204
+[PASS] GET /tasks/{id} answers 404 once deleted -> HTTP 404 {"detail":"Task 1 not found"}
+[PASS] GET /tasks/987654 answers a clean 404 -> HTTP 404 {"detail":"Task 987654 not found"}
+--------------------------------------------------------------------------------
+checks failed: 0
+=== python scripts/final_api_smoke.py ===
+starting: C:\Program Files\Python314\python.exe -m uvicorn app.main:app --port 57099 (temp database)
+[PASS] application starts and /health answers 200 -> http://127.0.0.1:57099/health
+[PASS] /health payload contract -> {'status': 'ok', 'service': 'Week3 Backend Debugging API', 'version': '1.0.0'}
+[PASS] GET /tasks rejects requests without a bearer token -> HTTP 401
+[PASS] POST /auth/register creates an account -> HTTP 201
+[PASS] POST /auth/login returns an expiring bearer token -> HTTP 200
+[PASS] POST /tasks answers 201 -> HTTP 201
+[PASS] POST payload: title trimmed, priority stored, due date normalised to UTC -> title='Smoke task' due_date='2026-11-01T07:30:00'
+[PASS] blank title rejected with 422 -> HTTP 422
+[PASS] missing title rejected with 422 -> HTTP 422
+[PASS] unknown field rejected with 422 -> HTTP 422
+[PASS] invalid status rejected with 422 -> HTTP 422
+[PASS] invalid priority rejected with 422 -> HTTP 422
+[PASS] invalid due_date rejected with 422 -> HTTP 422
+[PASS] overlong title rejected with 422 -> HTTP 422
+[PASS] overlong description rejected with 422 -> HTTP 422
+[PASS] null title rejected with 422 -> HTTP 422
+[PASS] GET /tasks paginates and reports the full total -> HTTP 200 items=1 total=1
+[PASS] GET /tasks beyond the last page returns an empty item list
+[PASS] invalid paging parameters rejected with 422 -> [422, 422, 422]
+[PASS] PATCH /tasks/{id} updates only the supplied field -> HTTP 200
+[PASS] PATCH cannot blank or null the stored title (422, value untouched) -> blank=422 null=422 title='Smoke task'
+[PASS] PUT /tasks/{id} replaces every writable field (omitted fields reset) -> HTTP 200 status='pending'
+[PASS] PUT with a blank title rejected with 422 -> HTTP 422
+[PASS] GET unknown task answers 404 with an exact detail payload -> HTTP 404 {"detail":"Task 987654 not found"}
+[PASS] error payload does not leak internals
+[PASS] unknown id on PATCH/PUT/DELETE answers 404 -> [404, 404, 404]
+[PASS] non-integer task id answered 422 -> HTTP 422
+[PASS] POST comment answers 201 -> HTTP 201
+[PASS] GET comments returns the comment associated with the task -> count=1
+[PASS] comment_count is exposed on the listed task -> count=1
+[PASS] comment on unknown task / empty body answered 4xx -> [404, 422]
+[PASS] filters are combined with AND semantics -> total=1
+[PASS] filter by status alone -> total=2
+[PASS] search matches title AND description, case-insensitively -> total=2
+[PASS] search combines with filters (AND) -> total=1
+[PASS] search without matches returns an empty page
+[PASS] invalid filter value rejected with 422 -> HTTP 422
+[PASS] GET /tasks/stats answers 200 -> HTTP 200
+[PASS] statistics counters consistent with the data created above -> total=3 completed=1
+[PASS] DELETE /tasks/{id} answers 204 with an empty body -> HTTP 204 body=b''
+[PASS] deleted task answers 404 and double delete answers 404 -> [404, 404]
+[PASS] statistics updated after deletion -> total=2
+[PASS] OpenAPI document exposes every route -> ['/auth/login', '/auth/register', '/health', '/tasks', '/tasks/stats', '/tasks/{task_id}', '/tasks/{task_id}/comments']
+--------------------------------------------------------------------------------
+checks failed: 0

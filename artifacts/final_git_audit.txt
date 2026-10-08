@@ -1,0 +1,63 @@
+Week 4 Final Git Audit
+======================
+
+Current branch: main
+Remote repository: none configured for this local working copy
+Previous HEAD: 8c5f9d7 (docs: finalize week 4 documentation and audit)
+New HEAD: 396c066 (test: finalize validation and audit evidence)
+
+Commits created in this cleanup pass:
+- d3d779c: feat: add week 4 performance tooling and validation
+- 8c5f9d7: docs: finalize week 4 documentation and audit
+- 396c066: test: finalize validation and audit evidence
+
+Files committed:
+- README.md
+- pyproject.toml
+- requirements.txt
+- benchmarks/baseline_results.md
+- benchmarks/bottleneck_analysis.md
+- benchmarks/locustfile.py
+- scripts/performance/_status_checker.ps1
+- scripts/performance/_status_diag.ps1
+- scripts/performance/_status_summary.ps1
+- scripts/performance/explain_plan.py
+- scripts/performance/locust_summary.py
+- scripts/performance/measure_query_counts.py
+- scripts/performance/run_baseline.py
+- scripts/performance/run_load_test.py
+- scripts/performance/seed_dataset.py
+- tests/performance/test_performance_infra.py
+- report/Week3_Debugging_Report.docx
+- scripts/generate_report.py
+- scripts/final_api_smoke.py
+- scripts/final_db_check.py
+- artifacts/final_submission_audit.txt
+
+Files intentionally ignored:
+- None required for submission were added to .gitignore.
+- .gitignore remains focused on Python caches, virtualenvs, IDE files and local DBs.
+- Large raw load-test evidence under artifacts/performance/ was kept in the working tree and not hidden.
+
+Files intentionally left untracked:
+- PERFORMANCE_TESTING.md
+  Reason: project-level supporting documentation; not required as tracked source by the repository's final submission set.
+- artifacts/performance/
+  Reason: required raw Locust evidence, large generated run outputs, and benchmark matrices; kept in the working tree as evidence and not silently deleted.
+- artifacts_phase7_full_pytest_raw.txt
+  Reason: raw verification artifact retained for evidence continuity; not part of the committed source files.
+
+Files excluded for security:
+- None. Secret scan found no API keys, tokens, passwords, credentials, .env files, or private keys.
+
+Git working-tree status after cleanup:
+- Not clean, because the required raw evidence and supporting docs remain intentionally untracked in the working tree.
+
+Secret scan result:
+- PASS. No secrets or credentials were found.
+
+Repository hygiene result:
+- PASS. No virtual environment, .env secrets, cached bytecode directories, or temporary junk remain in the tracked set.
+
+Remaining concern:
+- The raw performance evidence tree is intentionally left in place because it is required evidence for the submission and the repository policy has not been set to track those generated artifacts as committed source files.

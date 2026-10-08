@@ -1,0 +1,50 @@
+=== Command: C:\Program Files\Python314\python.exe scripts/performance/run_load_test.py --tasks 20 --users 1 --spawn-rate 1 --run-time 12s --warmup 0 --no-process-sampling --label week5-auth-smoke-recorded ===
+================================================================================================
+Week 4 reproducible Locust load test
+================================================================================================
+label        : week5-auth-smoke-recorded
+artifact dir : C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing\artifacts\performance\week5-auth-smoke-recorded
+dataset      : 20 tasks x 1 comment(s)
+seeding      : sqlite:///C:/Users/kolsu/AppData/Local/Temp/week4_load_q10o2ykq/week4_perf_tasks.db
+seeded       : 20 tasks, 20 comments
+starting     : uvicorn app.main:app --port 52649 (cwd=C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing)
+health       : {'status': 'ok', 'service': 'Week3 Backend Debugging API', 'version': '1.0.0'}
+load         : 1 users, spawn 1.0/s, duration 12s
+command      : C:\Program Files\Python314\python.exe -m locust -f C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing\benchmarks\locustfile.py --headless -u 1 -r 1.0 -t 12s --host http://127.0.0.1:52649 --csv C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing\artifacts\performance\week5-auth-smoke-recorded\locust --html C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing\artifacts\performance\week5-auth-smoke-recorded\locust_report.html --only-summary --loglevel WARNING
+------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------
+TOTALS  requests=37  failures=0  failure_rate=0.0000  rps=3.40  avg=15.4ms  median=14.0ms  p95=30.0ms  p99=66.0ms
+artifacts    : C:\Week5_Integration_testing_ci_cd\Week5_Integration_testing_ci_cd\week4_performance_load_testing\artifacts\performance\week5-auth-smoke-recorded (summary.md, summary.json, locust_stats.csv, locust_report.html)
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /tasks [bootstrap]                                                                 1     0(0.00%) |     65      65      65     65 |    0.09        0.00
+GET      /tasks/stats                                                                       2     0(0.00%) |     18      11      25     25 |    0.18        0.00
+GET      /tasks/{id}                                                                        2     0(0.00%) |      9       7      11     11 |    0.18        0.00
+GET      /tasks/{id}/comments                                                               2     0(0.00%) |     11       9      14     14 |    0.18        0.00
+GET      /tasks?limit=200                                                                   4     0(0.00%) |     13      12      15     13 |    0.37        0.00
+GET      /tasks?limit=50                                                                    8     0(0.00%) |     13       9      16     15 |    0.73        0.00
+GET      /tasks?priority=<value>                                                            1     0(0.00%) |     12      12      12     12 |    0.09        0.00
+GET      /tasks?q=<term>                                                                    8     0(0.00%) |     14       8      30     13 |    0.73        0.00
+GET      /tasks?status=&priority=                                                           3     0(0.00%) |     16      13      20     16 |    0.28        0.00
+GET      /tasks?status=<value>                                                              6     0(0.00%) |     13      10      16     15 |    0.55        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                        37     0(0.00%) |     15       7      65     14 |    3.40        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /tasks [bootstrap]                                                                     66     66     66     66     66     66     66     66     66     66     66      1
+GET      /tasks/stats                                                                           26     26     26     26     26     26     26     26     26     26     26      2
+GET      /tasks/{id}                                                                            11     11     11     11     11     11     11     11     11     11     11      2
+GET      /tasks/{id}/comments                                                                   14     14     14     14     14     14     14     14     14     14     14      2
+GET      /tasks?limit=200                                                                       13     13     16     16     16     16     16     16     16     16     16      4
+GET      /tasks?limit=50                                                                        15     16     16     16     16     16     16     16     16     16     16      8
+GET      /tasks?priority=<value>                                                                13     13     13     13     13     13     13     13     13     13     13      1
+GET      /tasks?q=<term>                                                                        13     14     14     14     30     30     30     30     30     30     30      8
+GET      /tasks?status=&priority=                                                               16     16     20     20     20     20     20     20     20     20     20      3
+GET      /tasks?status=<value>                                                                  15     15     15     15     16     16     16     16     16     16     16      6
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             14     15     16     16     20     30     66     66     66     66     66     37
+
+

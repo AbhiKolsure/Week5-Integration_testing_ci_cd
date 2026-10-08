@@ -1,0 +1,47 @@
+{
+  "aggregated": {
+    "request_count": 528.0,
+    "failure_count": 0.0,
+    "requests_per_second": 27.645155244437003,
+    "average_ms": 12.489273485533142,
+    "median_ms": 11.0,
+    "p95_ms": 22.0,
+    "p99_ms": 28.0,
+    "min_ms": 6.234699976630509,
+    "max_ms": 31.59240001696162,
+    "average_content_size": 357.7651515151515,
+    "failure_rate": 0.0
+  },
+  "endpoints": [
+    {
+      "name": "/tasks [bootstrap]",
+      "type": "GET",
+      "request_count": 10.0,
+      "failure_count": 0.0,
+      "requests_per_second": 0.5235824856900947,
+      "average_ms": 8.8877600064734,
+      "median_ms": 8.0,
+      "p95_ms": 13.0,
+      "p99_ms": 13.0,
+      "min_ms": 6.234699976630509,
+      "max_ms": 12.679000006755814,
+      "average_content_size": 6199.0,
+      "failure_rate": 0.0
+    },
+    {
+      "name": "/tasks/stats",
+      "type": "GET",
+      "request_count": 518.0,
+      "failure_count": 0.0,
+      "requests_per_second": 27.121572758746908,
+      "average_ms": 12.558800772773678,
+      "median_ms": 11.0,
+      "p95_ms": 22.0,
+      "p99_ms": 28.0,
+      "min_ms": 7.206999987829477,
+      "max_ms": 31.59240001696162,
+      "average_content_size": 245.0,
+      "failure_rate": 0.0
+    }
+  ]
+}

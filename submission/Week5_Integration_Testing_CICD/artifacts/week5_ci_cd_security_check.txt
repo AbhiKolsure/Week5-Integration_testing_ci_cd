@@ -1,0 +1,21 @@
+YAML parser: PyYAML 6.0.3
+[PASS] YAML syntax parses
+[PASS] push trigger targets main
+[PASS] pull_request trigger targets main
+[PASS] Python 3.14 configured for each job
+[PASS] requirements installed in CI and simulated CD
+[PASS] Ruff exact local command configured
+[PASS] complete pytest exact local command configured
+[PASS] simulated CD needs CI and runs only on success
+[PASS] simulator command configured
+[PASS] only checkout and setup-python actions are used
+[PASS] no credential-shaped literals or workflow secret references
+[PASS] auth key is generated ephemerally for simulation
+[PASS] no production/cloud deployment commands
+[PASS] no destructive workflow commands
+[PASS] temporary SQLite is disposed before temp cleanup
+[PASS] GitHub Actions contents permission is read-only
+Git status: NOT A GIT REPOSITORY (.git absent)
+Branch: UNAVAILABLE
+GitHub remote: NOT CONFIGURED
+Security/YAML checks: 16/16 passed

@@ -1,0 +1,46 @@
+PACKAGED SUBMISSION VALIDATION
+
+Commands executed from submission/Week5_Integration_Testing_CICD; bytecode and tool caches disabled.
+
+$ C:\Program Files\Python314\python.exe -m pytest -q -p no:cacheprovider
+........................................................................ [ 57%]
+.....................................................                    [100%]
+============================== warnings summary ===============================
+..\..\..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+..\..\..\..\..\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53
+  C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+125 passed, 2 warnings in 5.25s
+
+[exit code: 0]
+
+
+$ C:\Program Files\Python314\python.exe -m ruff check --no-cache app tests scripts benchmarks
+All checks passed!
+
+[exit code: 0]
+
+
+$ C:\Program Files\Python314\python.exe scripts/ci/validate_pipeline.py
+[PASS] push and pull_request triggers target main
+[PASS] both jobs configure Python 3.14
+[PASS] both jobs install requirements.txt
+[PASS] CI includes Ruff and the complete pytest suite
+[PASS] Ruff and pytest are required failure-sensitive steps
+[PASS] simulated deployment depends on successful CI
+[PASS] simulated deployment invokes the local validation script
+[PASS] workflow contents permission is read-only
+[PASS] workflow actions are limited to checkout and Python setup
+[PASS] workflow contains no credential literals or GitHub secret references
+[PASS] workflow contains no cloud/production deployment command
+[PASS] workflow contains no destructive command
+[PASS] two simulated deployment runs pass
+[PASS] simulated deployment success output is repeatable
+Pipeline validation: 14/14 checks passed
+
+[exit code: 0]

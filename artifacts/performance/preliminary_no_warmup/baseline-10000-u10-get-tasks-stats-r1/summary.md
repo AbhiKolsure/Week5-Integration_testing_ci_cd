@@ -1,0 +1,65 @@
+# Load test summary
+
+*Source CSV:* `C:\Performance Testing\week4_performance_load_testing\artifacts\performance\baseline-10000-u10-get-tasks-stats-r1\locust_stats.csv`
+
+## Environment and dataset
+
+| Item | Value |
+| --- | --- |
+| run_label | baseline-10000-u10-get-tasks-stats-r1 |
+| timestamp_utc | 2026-10-03T08:52:59+00:00 |
+| dataset_tasks | 10000 |
+| dataset_comments_per_task | 1 |
+| dataset_search_matches | 1429 |
+| users | 10 |
+| spawn_rate | 2.0 |
+| run_time | 20s |
+| page_size | 50 |
+| full_page_size | 200 |
+| search_term | burndown |
+| filter_status | pending |
+| filter_priority | high |
+| host | http://127.0.0.1:52331 |
+| tags | stats |
+| locust_command | C:\Program Files\Python314\python.exe -m locust -f C:\Performance Testing\week4_performance_load_testing\benchmarks\locustfile.py --headless -u 10 -r 2.0 -t 20s --host http://127.0.0.1:52331 --csv C:\Performance Testing\week4_performance_load_testing\artifacts\performance\baseline-10000-u10-get-tasks-stats-r1\locust --html C:\Performance Testing\week4_performance_load_testing\artifacts\performance\baseline-10000-u10-get-tasks-stats-r1\locust_report.html --only-summary --loglevel WARNING --tags stats |
+| api_cpu_samples | 54 |
+| api_mean_cpu_percent | 26.55 |
+| api_max_cpu_percent | 76.8 |
+| api_mean_rss_mb | 96.11 |
+| api_max_rss_mb | 102.4 |
+| python | 3.14.3 |
+| platform | Windows-11-10.0.26300-SP0 |
+| machine | AMD64 |
+| processor_count | 12 |
+| database_type | SQLite (file) |
+| database_url | sqlite:///C:/Users/kolsu/AppData/Local/Temp/week4_load_rqxtv07z/week4_perf_tasks.db |
+| fastapi | 0.141.1 |
+| starlette | 1.6.0 |
+| pydantic | 2.13.5 |
+| sqlalchemy | 2.0.52 |
+| uvicorn | 0.52.4 |
+| locust | 2.46.6 |
+| gevent | 26.9.0 |
+
+## Totals
+
+| Metric | Value |
+| --- | --- |
+| request_count | 267.00 |
+| failure_count | 0.00 |
+| failure_rate | 0.00 |
+| requests_per_second | 11.17 |
+| average_ms | 385.10 |
+| median_ms | 340.00 |
+| p95_ms | 570.00 |
+| p99_ms | 1100.00 |
+| min_ms | 140.40 |
+| max_ms | 4707.46 |
+| average_content_size | 468.00 |
+
+## Per endpoint
+
+| Endpoint | Requests | Failures | Failure rate | RPS | Avg ms | Median ms | p95 ms | p99 ms |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| /tasks [bootstrap] | 10 | 0 | 0.00 | 0.42 | 439.99 | 360.00 | 1100.00 | 1100.00 |
+| /tasks/stats | 257 | 0 | 0.00 | 10.75 | 382.96 | 340.00 | 570.00 | 720.00 |

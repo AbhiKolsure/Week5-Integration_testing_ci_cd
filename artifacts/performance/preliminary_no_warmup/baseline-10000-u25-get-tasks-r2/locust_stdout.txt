@@ -1,0 +1,30 @@
+Type     Name                                                                          # reqs      # fails |    Avg     Min     Max    Med |   req/s  failures/s
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+GET      /tasks [bootstrap]                                                                25     0(0.00%) |    530     145     760    560 |    1.32        0.00
+GET      /tasks?limit=50                                                                 1016     0(0.00%) |    103       4    1398     14 |   53.47        0.00
+--------|----------------------------------------------------------------------------|-------|-------------|-------|-------|-------|-------|--------|-----------
+         Aggregated                                                                      1041     0(0.00%) |    113       4    1398     14 |   54.78        0.00
+
+Response time percentiles (approximated)
+Type     Name                                                                                  50%    66%    75%    80%    90%    95%    98%    99%  99.9% 99.99%   100% # reqs
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+GET      /tasks [bootstrap]                                                                    560    660    700    730    740    760    760    760    760    760    760     25
+GET      /tasks?limit=50                                                                        14     18     25     37    410    770    970   1100   1300   1400   1400   1016
+--------|--------------------------------------------------------------------------------|--------|------|------|------|------|------|------|------|------|------|------|------
+         Aggregated                                                                             14     20     28     47    510    760    970   1100   1300   1400   1400   1041
+
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\locust\stats.py", line 1166, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: I/O operation on closed file.
+2026-10-03T08:54:57Z <Greenlet at 0x23b50546d40: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x0000023B504B3770>>> failed with ValueError
+
+[2026-10-03 14:24:57,795] DarkDevil/CRITICAL/locust.main: Unhandled exception in greenlet: <Greenlet at 0x23b50546d40: <bound method StatsCSVFileWriter.stats_writer of <locust.stats.StatsCSVFileWriter object at 0x0000023B504B3770>>>
+Traceback (most recent call last):
+  File "src/gevent/greenlet.py", line 912, in gevent._gevent_cgreenlet.Greenlet.run
+  File "C:\Users\kolsu\AppData\Roaming\Python\Python314\site-packages\locust\stats.py", line 1166, in stats_writer
+    self.requests_csv_filehandle.seek(requests_csv_data_start)
+    ^^^^^^^
+ValueError: I/O operation on closed file.

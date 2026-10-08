@@ -1,0 +1,215 @@
+{
+  "dataset": {
+    "tasks": 10000,
+    "comments_per_task": 1
+  },
+  "scenarios": [
+    {
+      "path": "/tasks",
+      "params": {
+        "limit": 50
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 0.093,
+      "slowest_statements": [
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.045
+        },
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 0.025
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.023
+        }
+      ],
+      "label": "GET /tasks?limit=50"
+    },
+    {
+      "path": "/tasks",
+      "params": {
+        "limit": 200
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 0.23,
+      "slowest_statements": [
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.142
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.066
+        },
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 0.021
+        }
+      ],
+      "label": "GET /tasks?limit=200"
+    },
+    {
+      "path": "/tasks",
+      "params": {
+        "status": "pending",
+        "limit": 50
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 0.21,
+      "slowest_statements": [
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 0.108
+        },
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.074
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.028
+        }
+      ],
+      "label": "GET /tasks?status=pending"
+    },
+    {
+      "path": "/tasks",
+      "params": {
+        "priority": "high",
+        "limit": 50
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 0.181,
+      "slowest_statements": [
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 0.104
+        },
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.055
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.022
+        }
+      ],
+      "label": "GET /tasks?priority=high"
+    },
+    {
+      "path": "/tasks",
+      "params": {
+        "q": "burndown",
+        "limit": 50
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 4.712,
+      "slowest_statements": [
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 4.61
+        },
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.077
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.026
+        }
+      ],
+      "label": "GET /tasks?q=burndown"
+    },
+    {
+      "path": "/tasks",
+      "params": {
+        "status": "pending",
+        "priority": "high",
+        "limit": 50
+      },
+      "status": 200,
+      "statements": 3,
+      "total_db_ms": 0.627,
+      "slowest_statements": [
+        {
+          "statement": "SELECT count(*) AS count_1 FROM (SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.stat",
+          "ms": 0.537
+        },
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.064
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?, ?, ?, ?, ?, ?, ?, ?, ",
+          "ms": 0.026
+        }
+      ],
+      "label": "GET /tasks?status=&priority="
+    },
+    {
+      "path": "/tasks/stats",
+      "params": {},
+      "status": 200,
+      "statements": 6,
+      "total_db_ms": 2.078,
+      "slowest_statements": [
+        {
+          "statement": "SELECT count(tasks.id) AS count_1 FROM tasks WHERE tasks.due_date IS NOT NULL AND tasks.due_date < ? AND tasks.status != ?",
+          "ms": 1.084
+        },
+        {
+          "statement": "SELECT tasks.priority AS tasks_priority, count(tasks.id) AS count_1 FROM tasks GROUP BY tasks.priority",
+          "ms": 0.258
+        },
+        {
+          "statement": "SELECT count(comments.id) AS count_1 FROM comments",
+          "ms": 0.207
+        }
+      ],
+      "label": "GET /tasks/stats"
+    },
+    {
+      "path": "/tasks/1",
+      "params": {},
+      "status": 200,
+      "statements": 2,
+      "total_db_ms": 0.058,
+      "slowest_statements": [
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.035
+        },
+        {
+          "statement": "SELECT comments.task_id AS comments_task_id, count(comments.id) AS count_1 FROM comments WHERE comments.task_id IN (?) GROUP BY comments.tas",
+          "ms": 0.022
+        }
+      ],
+      "label": "GET /tasks/1"
+    },
+    {
+      "path": "/tasks/1/comments",
+      "params": {},
+      "status": 200,
+      "statements": 2,
+      "total_db_ms": 0.035,
+      "slowest_statements": [
+        {
+          "statement": "SELECT tasks.id AS tasks_id, tasks.title AS tasks_title, tasks.description AS tasks_description, tasks.status AS tasks_status, tasks.priorit",
+          "ms": 0.023
+        },
+        {
+          "statement": "SELECT comments.id AS comments_id, comments.task_id AS comments_task_id, comments.author AS comments_author, comments.body AS comments_body,",
+          "ms": 0.013
+        }
+      ],
+      "label": "GET /tasks/1/comments"
+    }
+  ]
+}

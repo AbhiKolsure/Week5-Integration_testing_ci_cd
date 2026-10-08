@@ -1,0 +1,31 @@
+WEEK 5 GIT SUBMISSION READINESS
+Git repository status: NOT A GIT REPOSITORY (.git metadata absent).
+Branch status: UNAVAILABLE; there is no current Git branch.
+Remote status: NOT CONFIGURED; no GitHub URL has been supplied or inferred.
+Push status: NOT ATTEMPTED.
+
+Files intended for a deliberate initial commit:
+- Application and persistence source under app/.
+- Tests under tests/.
+- Scripts and benchmark source under scripts/ and benchmarks/.
+- .github/workflows/ci-cd.yml, requirements.txt, pyproject.toml, README.md, and .gitignore.
+- .env.example (placeholder only; never replace it with real credentials).
+- Week 5 docs, report source, final DOCX, submission description, and validated evidence artifacts.
+- Curated submission/Week5_Integration_Testing_CICD/ package.
+- Review inherited Week 4 raw performance evidence individually before adding it to an initial Git commit; evidence is preserved in the project and is not copied into the curated package.
+
+Git-ignore checks:
+[PASS] .env
+[PASS] .venv/
+[PASS] venv/
+[PASS] __pycache__/
+[PASS] .pytest_cache/
+[PASS] .ruff_cache/
+[PASS] *.py[cod]
+[PASS] *.db
+[PASS] *.db-journal
+
+Secrets check: final_security_audit.txt reports 0 high-confidence token/key pattern matches across inspected source/config/docs; .env absent. Synthetic disposable test keys remain in test fixtures only.
+History scan: NOT POSSIBLE without Git metadata. No claim is made about prior commits or untracked history.
+Curated package present: YES.
+No Git initialization, remote configuration, staging, commit, or push was performed.

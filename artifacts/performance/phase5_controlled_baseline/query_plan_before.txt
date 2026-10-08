@@ -1,0 +1,31 @@
+====================================================================================================
+EXPLAIN QUERY PLAN - 10000 tasks x 1 comment(s)
+====================================================================================================
+
+--- indexes present on tasks / comments ---
+  tasks.id               -> ix_tasks_id  (normal)
+  tasks.priority         -> ix_tasks_priority  (normal)
+  tasks.title            -> ix_tasks_title  (normal)
+  tasks.status           -> ix_tasks_status  (normal)
+  comments.id               -> ix_comments_id  (normal)
+  comments.task_id          -> ix_comments_task_id  (normal)
+
+--- STATS ENDPOINT ---
+  total                    [SCAN]
+      SCAN tasks USING COVERING INDEX ix_tasks_id
+  completed                [SEARCH]
+      SEARCH tasks USING COVERING INDEX ix_tasks_status (status=?)
+  overdue (target)         [SCAN]
+      SCAN tasks
+  by_status                [SCAN]
+      SCAN tasks USING COVERING INDEX ix_tasks_status
+  by_priority              [SCAN]
+      SCAN tasks USING COVERING INDEX ix_tasks_priority
+  total_comments           [SCAN]
+      SCAN comments USING COVERING INDEX ix_comments_id
+
+--- LIST ENDPOINT ---
+  list page limit=50       [SCAN]
+      SCAN tasks USING COVERING INDEX ix_tasks_id
+  list count               [SCAN]
+      SCAN tasks USING COVERING INDEX ix_tasks_id

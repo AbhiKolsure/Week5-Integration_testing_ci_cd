@@ -1,0 +1,66 @@
+============================================================================================
+WEEK 4 - PHASE 5A: ENVIRONMENT CONTROL STATUS
+============================================================================================
+Recorded: 2026-10-06 (local), by the Phase 5 pre-flight check
+Purpose : verify the host is controlled BEFORE any application code is changed.
+
+------------------------------------------------------------------------------------------
+1. BACKGROUND SYNC / ONEDRIVE PROCESSES
+------------------------------------------------------------------------------------------
+Sample 1 (T0) and Sample 2 (T0+15s), wall-clock window = 15 s.
+
+  Process                    PID      CPU (T0)    CPU (T0+15s)    Delta
+  OneDrive                   22044    180.250     180.250         +0.000 s
+  OneDrive.Sync.Service      16912     11.844      11.844         +0.000 s
+
+  Observed: BOTH OneDrive processes accumulated 0.000 s of CPU across the 15 s window,
+            i.e. no sync activity was running during that window.
+
+  Command lines:
+    OneDrive.exe
+      "C:\Program Files\Microsoft OneDrive\OneDrive.exe" /background
+    OneDrive.Sync.Service.exe
+      "C:\Program Files\Microsoft OneDrive\26.168.0830.0006\OneDrive.Sync.Service.exe" /silentConfig
+
+------------------------------------------------------------------------------------------
+2. IS THE PROJECT INSIDE ONEDRIVE'S SYNC SCOPE?
+------------------------------------------------------------------------------------------
+  OneDrive sync root detected : C:\Users\kolsu\OneDrive
+  Project under test          : c:\Performance Testing
+  Project inside sync root    : NO   (string test "c:\Performance Testing".StartsWith(root) = False)
+
+  Therefore even a resumed OneDrive sync would not read or write the project tree,
+  benchmark artifacts or the SQLite files used by the load tests.
+  It would, however, still compete for CPU/IO system-wide if it became active.
+
+------------------------------------------------------------------------------------------
+3. OTHER BACKGROUND PROCESSES OBSERVED (cumulative process CPU, seconds)
+------------------------------------------------------------------------------------------
+  Code 4452      206.422
+  Code 5916      201.578
+  Code 12528     186.860
+  OneDrive 22044 180.250
+  msedge 14504   100.063
+
+------------------------------------------------------------------------------------------
+4. CONCLUSION / STATUS
+------------------------------------------------------------------------------------------
+  VERIFIED      : both OneDrive processes were IDLE during a 15 s observation window
+                  (+0.000 s CPU each).
+  VERIFIED      : the project, its artifacts and its databases are OUTSIDE the OneDrive
+                  sync root, so sync activity cannot touch the measurement files.
+  NOT VERIFIABLE: whether OneDrive sync has actually been PAUSED by the operator.
+                  "Paused" is a OneDrive UI/agent setting; it cannot be read from the
+                  command line in this environment.
+
+  RESULT: environment-control status = PAUSED (OPERATOR-CONFIRMED)
+          OneDrive processes measured idle (+0.000 s / 15 s) AND the project is outside
+          the OneDrive sync root, AND the operator confirmed in-session that OneDrive is
+          paused before Phase 5B began.
+
+  Phase 5A gate: SATISFIED - Phase 5B may proceed.
+
+  Note: the independent objective backstop remains the Phase 5B repeatability gate
+        (latency spread <= 15 % over 5 repeats). Any baseline run exceeding that gate
+        stops the experiment regardless of this confirmation.
+============================================================================================
