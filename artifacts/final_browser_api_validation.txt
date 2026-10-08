@@ -1,0 +1,19 @@
+Swagger UI validation (integrated browser)
+==========================================
+Target: http://127.0.0.1:8000/docs
+Live server: existing Week 5 application server
+
+Observed:
+- Swagger UI rendered successfully.
+- OpenAPI declares HTTP Bearer authentication for protected task routes.
+- POST /auth/register: HTTP 201.
+- Registration response was sanitized (no password or password_hash fields).
+- POST /auth/login: HTTP 200; token_type was bearer.
+- Entered the raw access_token in Swagger's HTTPBearer Authorize value.
+- Authenticated POST /tasks: HTTP 201.
+- Authenticated DELETE /tasks/{task_id}: HTTP 204.
+- The test account and task were cleaned up after validation.
+
+Result: PASS
+
+No generated password or access token is recorded in this file.

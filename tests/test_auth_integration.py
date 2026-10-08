@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime, timedelta
 from typing import Any
+from uuid import uuid4
 
 import jwt
 import pytest
@@ -11,7 +12,12 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from app import models
-from app.security import TOKEN_ISSUER, validate_auth_config, verify_password
+from app.security import (
+    TOKEN_ISSUER,
+    get_auth_secret_key,
+    validate_auth_config,
+    verify_password,
+)
 from tests.conftest import TEST_PASSWORD
 
 TEST_SECRET = "test-only-secret-key-with-at-least-32-bytes"
@@ -237,3 +243,133 @@ def test_registered_login_token_allows_full_task_and_comment_lifecycle(
 
     assert client.delete(f"/tasks/{task_id}").status_code == 204
     assert client.get(f"/tasks/{task_id}").status_code == 404
+
+
+def test_openapi_declares_bearer_auth_for_protected_routes(
+    unauthenticated_client: TestClient,
+) -> None:
+    response = unauthenticated_client.get("/openapi.json")
+
+    assert response.status_code == 200
+    schema = response.json()
+    assert schema["components"]["securitySchemes"]["HTTPBearer"] == {
+        "type": "http",
+        "scheme": "bearer",
+    }
+    for path in ("/tasks", "/tasks/stats", "/tasks/{task_id}", "/tasks/{task_id}/comments"):
+        for operation in schema["paths"][path].values():
+            assert operation["security"] == [{"HTTPBearer": []}]
+    for path, method in (("/auth/register", "post"), ("/auth/login", "post"), ("/health", "get")):
+        assert schema["paths"][path][method].get("security", []) == []
+
+
+def test_unique_user_completes_live_api_auth_and_task_workflow(
+    unauthenticated_client: TestClient,
+    db_session: Session,
+) -> None:
+    email = f"week5-e2e-{uuid4().hex}@example.com"
+    password = f"Week5-E2E-{uuid4().hex}"
+    registration = {"email": email, "password": password}
+
+    invalid_payload = unauthenticated_client.post(
+        "/auth/register",
+        json={"email": "not-an-email", "password": password},
+    )
+    assert invalid_payload.status_code == 422
+
+    invalid_credentials = unauthenticated_client.post(
+        "/auth/login",
+        json={"email": email, "password": password},
+    )
+    assert invalid_credentials.status_code == 401
+
+    unauthenticated = unauthenticated_client.post(
+        "/tasks",
+        json={"title": "Must be authenticated"},
+    )
+    assert unauthenticated.status_code == 401
+
+    malformed = unauthenticated_client.get(
+        "/tasks",
+        headers={"Authorization": "Bearer not-a-jwt"},
+    )
+    assert malformed.status_code == 401
+
+    created_user = unauthenticated_client.post("/auth/register", json=registration)
+    assert created_user.status_code == 201
+    user_data = created_user.json()
+    assert user_data["email"] == email
+    assert "password" not in user_data
+    assert "password_hash" not in user_data
+
+    user = db_session.query(models.User).filter_by(email=email).one()
+    assert user.password_hash != password
+    assert user.password_hash.startswith("$argon2id$")
+    assert verify_password(password, user.password_hash)
+
+    duplicate = unauthenticated_client.post("/auth/register", json=registration)
+    assert duplicate.status_code == 409
+
+    login = unauthenticated_client.post("/auth/login", json=registration)
+    assert login.status_code == 200
+    token_response = login.json()
+    assert token_response["access_token"]
+    assert token_response["token_type"] == "bearer"
+    claims = jwt.decode(
+        token_response["access_token"],
+        get_auth_secret_key(),
+        algorithms=["HS256"],
+        issuer=TOKEN_ISSUER,
+    )
+    assert claims["sub"] == str(user_data["id"])
+    assert claims["token_type"] == "access"
+
+    unauthenticated_client.headers["Authorization"] = (
+        f"Bearer {token_response['access_token']}"
+    )
+    task_response = unauthenticated_client.post(
+        "/tasks",
+        json={"title": "Unique authentication workflow", "description": email},
+    )
+    assert task_response.status_code == 201
+    task_id = task_response.json()["id"]
+
+    task_list = unauthenticated_client.get("/tasks")
+    assert task_list.status_code == 200
+    assert any(task["id"] == task_id for task in task_list.json()["items"])
+    task_read = unauthenticated_client.get(f"/tasks/{task_id}")
+    assert task_read.status_code == 200
+
+    patched = unauthenticated_client.patch(
+        f"/tasks/{task_id}",
+        json={"status": "in_progress"},
+    )
+    assert patched.status_code == 200
+    replaced = unauthenticated_client.put(
+        f"/tasks/{task_id}",
+        json={
+            "title": "Updated authentication workflow",
+            "description": email,
+            "status": "in_progress",
+            "priority": "high",
+        },
+    )
+    assert replaced.status_code == 200
+
+    comment = unauthenticated_client.post(
+        f"/tasks/{task_id}/comments",
+        json={"body": "Authenticated end-to-end comment"},
+    )
+    assert comment.status_code == 201
+    comments = unauthenticated_client.get(f"/tasks/{task_id}/comments")
+    assert comments.status_code == 200
+    assert comments.json()[0]["body"] == "Authenticated end-to-end comment"
+
+    statistics = unauthenticated_client.get("/tasks/stats")
+    assert statistics.status_code == 200
+    assert statistics.json()["total"] == 1
+    assert statistics.json()["total_comments"] == 1
+
+    deleted = unauthenticated_client.delete(f"/tasks/{task_id}")
+    assert deleted.status_code == 204
+    assert unauthenticated_client.get(f"/tasks/{task_id}").status_code == 404

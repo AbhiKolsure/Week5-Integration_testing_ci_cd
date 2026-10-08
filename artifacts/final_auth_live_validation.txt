@@ -1,0 +1,15 @@
+Live authentication API probe: http://127.0.0.1:8000
+Synthetic live probe cleanup: PASS (removed 1 user(s); no test task remains)
+Invalid registration payload: HTTP 422 (expected 422)
+Registration: HTTP 201 (expected 201)
+Duplicate normalized email: HTTP 409 (expected 409)
+Wrong password: HTTP 401 (expected 401)
+Valid login: HTTP 200 (expected 200)
+Protected request without token: HTTP 401 (expected 401)
+Protected request with malformed token: HTTP 401 (expected 401)
+Protected request with raw access token: HTTP 200 (expected 200)
+Protected request with Bearer prefix pasted into Swagger value: HTTP 401 (expected 401)
+Authenticated task creation: HTTP 201 (expected 201)
+Authenticated task deletion: HTTP 204 (expected 204)
+Deleted task lookup: HTTP 404 (expected 404)
+Live auth behavior result: PASS
